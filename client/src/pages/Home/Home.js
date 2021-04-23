@@ -1,3 +1,5 @@
+import {useState} from 'react'
+import Book from '../../utils/Books.js'
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField, Button } from '@material-ui/core';
@@ -12,12 +14,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Search = ({
-  search,
-  handleInputChange,
-  handleSearch
-}) => {
+const Home = () => {
   const classes = useStyles();
+  const [bookState, setBookState] = useState({
+    search: '',
+    books: []
+  })
+
+  const handleInputChange = ({ target }) => {
+    setBookState({ ...bookState, [target.name]: target.value })
+  }
+
+  const handleSearch = event => {
+    event.preventDefault()
+    Book.getBook(bookState.search)
+      .then(({ data: books }) => {
+        console.log(books)
+        setBookState({ ...bookState, books })
+      })
+      .catch(err => console.error(err))
+  }
 
   return (
     <>
@@ -31,7 +47,7 @@ const Search = ({
           id="outlined-basic"
           label="Search title"
           variant="outlined"
-          value={search}
+          value={bookState.search}
           onChange={handleInputChange}
         />
       </form>
@@ -41,6 +57,7 @@ const Search = ({
         Search
       </Button>
     </>
-  );
+  )
 }
-export default Search
+
+export default Home

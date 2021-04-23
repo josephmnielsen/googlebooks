@@ -1,5 +1,5 @@
-import Home from './pages/Home.js'
-import Saved from './pages/Saved.js'
+import Home from './pages/Home'
+import Saved from './pages/Saved'
 import Nav from './components/AppBar'
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 
@@ -8,13 +8,17 @@ import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 const App = () => {
 
   return (
-      <Router>
+    <Router>
+      <div>
+        <Nav />
         <Switch>
-          <Nav />
-          <Route exact path="/" component={Home}/>
+          <Route exact path="/">
+            <Home />
+          </Route>
           <Route path="/saved" component={Saved} />
         </Switch>
-      </Router>
+      </div>
+    </Router>
   );
 }
 
