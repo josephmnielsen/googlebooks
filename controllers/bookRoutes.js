@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { Book } = require('../models/Book.js')
+const  Book  = require('../models/Book.js')
 
 router.get('/books', (req, res) => {
   Book.find({})
@@ -8,7 +8,12 @@ router.get('/books', (req, res) => {
 })
 
 router.post('/books', (req, res) => {
-  Book.create(req.body)
+  Book.create({
+    title: req.body.title,
+    author: req.body.author,
+    image: req.body.image,
+    description: req.body.description
+  })
     .then(book => res.json(book))
     .catch(err => console.log(err))
 })
